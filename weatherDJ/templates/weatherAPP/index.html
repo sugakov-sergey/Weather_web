@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Погодное приложение</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/cosmo/bootstrap.min.css">
+
+</head>
+<body>
+
+<div class="container mt-5">
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-9"><h1>Погодное приложение</h1><br><br></div>
+        <div class="col-4">
+            <form action="" method="post">
+                {% csrf_token %}
+                <label for="city">Город</label>
+                {{ form.name }}
+                <br>
+                <div class="row">
+                    <div class="col-4">
+                        <input type="submit"
+                               name="send"
+                               value="Добавить"
+                               class="mt-2 btn btn-danger">
+                    </div>
+                    <div style="margin-top: 12px; color: #ced4da" class="col-6" >
+                        <p> для отслеживания </p>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-5 offset-1">
+            {% for info in all_info %}
+                <div class="alert alert-dismissible alert-primary">
+                    <div class="row">
+                        <div class="col-9">
+                            <b>Город:</b> {{ info.city }} <br>
+                            <b>Температура:</b> {{ info.temp }} <sup>0</sup><br><br>
+                            <form action="" method="get">
+                                {% csrf_token %}
+                                <input type="submit"
+                                       name="{{ info.city }}"
+                                       value="Удалить"
+                                       class="btn btn-primary btn-sm">
+
+                            </form>
+                        </div>
+                        <div class="col-1">
+                            <img  src='http://openweathermap.org/img/wn/{{ info.icon }}@2x.png'
+                                 alt="Фото погоды" class="img-thunbnail">
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+
+</div>
+</body>
+</html>
