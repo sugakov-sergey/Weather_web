@@ -7,7 +7,7 @@ from .forms import CityForm
 
 
 def index(request):
-    apikey = config.apikey
+    apikey = config.APIKEY
     # insert your api key from https://openweathermap.org/api
 
     if request.method == 'POST':
@@ -15,8 +15,9 @@ def index(request):
         form.save()
     elif request.method == 'GET':
         QueryDict = request.GET.fromkeys(request.GET, value='Удалить')
-        name = list(QueryDict.keys())[1]
-        City.objects.filter(name=name).delete()
+        if QueryDict:
+            name = list(QueryDict.keys())[1]
+            City.objects.filter(name=name).delete()
 
     form = CityForm()
 
